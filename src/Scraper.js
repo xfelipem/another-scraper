@@ -1,7 +1,6 @@
 /**
  * 
  */
-import fs from 'fs';
 import request from 'request';
 import cheerio from 'cheerio';
 import { forEach } from 'helper-tools/src/object';
@@ -61,67 +60,49 @@ export class Scraper {
         if (hasError) {
             this.htmlRequestErrorHandler(error, { req, res, response, html });
         } else {
-            //Load html
-            this.loadCurrentHtml(html);
-
-            //extract data;
-            const extractedData = this.extractData();
-            //Parse data
-            const parsedData = this.parseData(extractedData);
-            //Store into database / file
-            this.storeData(parsedData);
-            //User notification
-            this.notifyUser('Chajá');
+            this.htmlRequestSuccessHandler(html);
         }
     }
 
-    parseData(data) {
-        const parsedData = data;
-        //console.log('parseData', { parsedData });
-        return parsedData;
+    htmlRequestSuccessHandler(html) {
+        //Extract data;
+        const extractedData = this.extractData(html, 'cheerio');
+
+        //Save data
+        this.saveData(extractedData);
     }
 
-    storeData(data) {
-        //console.log('storeData', { data });
-        fs.writeFile('other-scraper_database.json', JSON.stringify(data, null, 4), (error) => {
-            if (error) {
-                console.error('Hubo un error', { error })
-            } else {
-                this.notifyUser('Exito, other-scraper_database.json se creado/actualizado.');
-            }
-        })
+    extractData(html, engine) {
+        switch (engine) {
+            case 'cheerio':
+                //Wrap html
+                const wrappedHtml = this.wrapHtmlWithCheerio(html);
+
+                return this.extractDataWithCheerio(wrappedHtml)
+                break
+        }
+
     }
 
-    notifyUser(message) {
-        //const rsp = this.lastScrapRequest.response;
+    saveData(data) {
+        //Parse data as string
+        const parsedDataAsString = this.parseDataAsString(extractedData);
 
-        //if (rsp) {
-        //    rsp.send(message);
-        //} else {
-        console.log(message)
-        //}
+        //Store into mongo database
+        this.storeDataInMongoDB(parsedDataAsString);
     }
 
-    htmlRequestErrorHandler(error, data) {
-        console.log('htmlRequestErrorHandler', { error, data });
-    }
-
-    loadCurrentHtml(html) {
-        //console.log('loadCurrentHtml', { html });
-        this.currentHtml = cheerio.load(html);
-    }
-
-    extractData() {
+    extractDataWithCheerio($html) {
         //console.log('extractData')
-        const $ = this.currentHtml;
+        const dataExtractors = this.state.get('extractors');
         let extractedData = [];
 
-        forEach(this.dataExtractors, (extractor, title) => {
+        forEach(dataExtractors, (extractor, title) => {
             console.log('forEach CB', { extractor, title });
 
             extractedData.push({
                 title,
-                data: extractor($)
+                data: extractor($html)
             });
         });
 
@@ -130,8 +111,29 @@ export class Scraper {
         return extractedData;
     }
 
+    parseDataAsString(data) {
+        const parsedData = JSON.stringify(data, null, 4);
+        //console.log('parseData', { parsedData });
+        return parsedData;
+    }
+
+    storeDataInMongoDB(parsedData) {
+        console.log('storeDataInMongoDB', { parsedData });
+
+        return parsedData;
+    }
+
+    htmlRequestErrorHandler(error, data) {
+        console.log('htmlRequestErrorHandler', { error, data });
+    }
+
+    wrapHtmlWithCheerio(html) {
+        //console.log('loadCurrentHtml', { html });
+        return cheerio.load(html);
+    }
+
     setDataExtractors(extractors) {
-        this.dataExtractors = extractors;
+        this.state.set({ extractors });
     }
 }
 
