@@ -1,11 +1,6 @@
 /**
  * 
  */
-import { forEach } from 'helper-tools/src/object';
-
-/**
- * 
- */
 export class State {
     constructor(props) {
         this.setInitialState(props);
@@ -20,11 +15,9 @@ export class State {
     }
 
     set(newState) {
-        //console.log('State:set', { newState })
-        forEach(newState, (value, key) => {
-            //console.log('State:set:forEach:cb', { value, key })
-            this.state[key] = value;
-        })
+        Object.keys(newState).forEach((key) => {
+            this.state[key] = newState[key];
+        });
     }
 
     get(key) {
