@@ -1,3 +1,5 @@
+// INTERNAL DEPENDENCIES
+import { withStore } from "../helper";
 
 export class Scraper {
     scrapLoadedHtml() {
@@ -34,20 +36,20 @@ export class Scraper {
 export const createScraper = function (extractors, Engine, html) {
     //console.log('Scraper createScraper');
     let scraperWithState = withStore(new Scraper());
-    
+
     if (extractors) {
-        scraper.loadExtractors(extractors);
+        scraperWithState.loadExtractors(extractors);
     }
 
     if (Engine) {
-        scraper.loadEngine(Engine);
+        scraperWithState.loadEngine(Engine);
     }
 
     if (html) {
-        scraper.loadHtml(html);
+        scraperWithState.loadHtml(html);
     }
 
-    return scraper;
+    return scraperWithState;
 };
 
 export default Scraper;
