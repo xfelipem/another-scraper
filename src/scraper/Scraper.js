@@ -1,38 +1,31 @@
-/**
- * 
- */
-import State from '../state/State';
 
-/**
- * 
- */
 export class Scraper {
     scrapLoadedHtml() {
         return this.scrap(this.state.get('html'));
     }
 
     scrap(html) {
-        const extractors = this.state.get('extractors');
-        const engine = this.state.get('engine');
+        const extractors = this.get('extractors');
+        const engine = this.get('engine');
         const extract = engine.start(extractors);
 
         return extract(html);
     }
 
     loadEngine(Engine) {
-        this.state.set({ 'engine': new Engine() });
+        this.set({ 'engine': new Engine() });
 
         return this;
     }
 
     loadExtractors(extractors) {
-        this.state.set({ extractors });
+        this.set({ extractors });
 
         return this;
     }
 
     loadHtml(html) {
-        this.state.set({ html });
+        this.set({ html });
 
         return this;
     }
@@ -40,10 +33,8 @@ export class Scraper {
 
 export const createScraper = function (extractors, Engine, html) {
     //console.log('Scraper createScraper');
-    let scraper = new Scraper();
-
-    scraper.state = new State();
-
+    let scraperWithState = withStore(new Scraper());
+    
     if (extractors) {
         scraper.loadExtractors(extractors);
     }
@@ -57,6 +48,6 @@ export const createScraper = function (extractors, Engine, html) {
     }
 
     return scraper;
-}
+};
 
 export default Scraper;
