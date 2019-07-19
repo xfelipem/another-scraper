@@ -7,8 +7,9 @@ class RegexEngine extends Engine {
 
         Object.keys(dataExtractors).forEach((name) => {
             const extractor = dataExtractors[name];
+            const titleData = extractor(html);
 
-            extractedData[name] = extractor(html);
+            extractedData[name] = titleData
         });
 
         return extractedData;

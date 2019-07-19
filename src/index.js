@@ -1,8 +1,8 @@
 // INTERNAL DEPENDENCIES
 import Scraper from './scraper/Scraper';
 import { createScraper } from './scraper/Scraper';
-import { CheerioEngine } from './engine/CheerioEngine';
-import { RegexEngine } from './engine/RegexEngine'
+import CheerioEngine from './engine/CheerioEngine';
+import RegexEngine from './engine/RegexEngine'
 import EngineInterface from './engine/EngineInterface';
 
 // FUNCTIONS

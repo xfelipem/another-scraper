@@ -4,7 +4,7 @@ import cheerio from 'cheerio';
 // INTERNAL DEPENDENCIES
 import Engine from './EngineInterface';
 
-export class CheerioEngine extends Engine {
+class CheerioEngine extends Engine {
     extractData(html, dataExtractors) {
         const $html = cheerio.load(html);
         let extractedData = {};

@@ -20,7 +20,7 @@ export class Engine {
      * 
      * @param {object} extractors Conjunto de métodos que devuelven un valor.
      */
-    start(extractors) {
+    start = (extractors) => {
         return this.storeHtmlInClosure(extractors)
     }
 
@@ -34,12 +34,9 @@ export class Engine {
      * 
      * @param {object} extractors Conjunto de métodos que devuelven un valor.
      */
-    storeHtmlInClosure(extractors) {
-        return (html) => {
-            return this.extractData(html, extractors);
-        };
+    storeHtmlInClosure = (extractors) => {
+        return (html) => this.extractData(html, extractors);
     }
-
 }
 
 export default Engine;
