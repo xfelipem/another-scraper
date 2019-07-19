@@ -1,30 +1,21 @@
+// INTERNAL DEPENDENCIES
 import Scraper from './scraper/Scraper';
+import { createScraper } from './scraper/Scraper';
+import { CheerioEngine } from './engine/CheerioEngine';
+import { RegexEngine } from './engine/RegexEngine'
+import { EngineInterface } from './engine/EngineInterface';
 
-import {
-    createScraper as create
-} from './scraper/Scraper';
-import {
-    CheerioEngine as Cheerio
-} from './engine/CheerioEngine';
-import {
-    RegexEngine as Regex
-} from './engine/RegexEngine'
-import {
-    EngineInterface as Engine
-} from './engine/EngineInterface';
+// FUNCTIONS
+const createCheerioScraper = (extractors, html) => createScraper(extractors, CheerioEngine, html);
+const createRegexScraper = (extractors, html) => createScraper(extractors, RegexEngine, html);
 
-export let EngineInterface = Engine;
-export let CheerioEngine = Cheerio;
-export let RegexEngine = Regex;
-
-export const createScraper = create;
-
-export const createCheerioScraper = (extractors, html) => {
-    return createScraper(extractors, CheerioEngine, html);
-}
-
-export const createRegexScraper = (extractors, html) => {
-    return createScraper(extractors, RegexEngine, html);
-}
-
+// EXPORT
+export {
+    createCheerioScraper,
+    createRegexScraper,
+    createScraper,
+    CheerioEngine,
+    EngineInterface,
+    RegexEngine
+};
 export default Scraper;
