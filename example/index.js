@@ -13,7 +13,11 @@ const dataMovieCheerioExtractors = {
 
 // Get the website
 axios.get('http://www.imdb.com/title/tt1229340/')
-  .then(({ data: html }) => {
+  .then((response) => {
+    const { data: html } = response;
+    
+    console.log(response);
+
     if (html) {
       // Create scraper
       const dataMovieCheerioScraper = createScraper(dataMovieCheerioExtractors, CheerioEngine, html);
@@ -23,4 +27,3 @@ axios.get('http://www.imdb.com/title/tt1229340/')
       console.log({ extractedData });
     }
   });
-  
