@@ -6,7 +6,7 @@
       "!/node_modules/"
     ]
   },
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node scraper microservice",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "export NODE_ENV=testing && jest --no-cache",
     "watch": "export NODE_ENV=testing && jest --watch",
     "coverage": "export NODE_ENV=testing && jest --coverage",
-    "example" : "node ./example/movieScraper.js"
+    "example": "node ./example/movieScraper.js"
   },
   "devDependencies": {
     "axios": "^0.19.0",
