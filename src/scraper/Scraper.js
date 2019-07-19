@@ -3,7 +3,7 @@ import { withStore } from "../helper";
 
 export class Scraper {
     scrapLoadedHtml() {
-        return this.scrap(this.state.get('html'));
+        return this.scrap(this.get('html'));
     }
 
     scrap(html) {
@@ -15,19 +15,19 @@ export class Scraper {
     }
 
     loadEngine(Engine) {
-        this.set({ 'engine': new Engine() });
+        this.update({ 'engine': new Engine() });
 
         return this;
     }
 
     loadExtractors(extractors) {
-        this.set({ extractors });
+        this.update({ extractors });
 
         return this;
     }
 
     loadHtml(html) {
-        this.set({ html });
+        this.update({ html });
 
         return this;
     }

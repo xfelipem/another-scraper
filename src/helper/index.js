@@ -4,18 +4,18 @@
  * @param {Object} initialState Initial state of the store
  */
 export const withStore = (object, initialState) => {
-  let state = {};
+  let store = {};
 
   const get = (key) => {
     if (key) {
-      return state[key];
+      return store[key];
     } else {
-      return state;
+      return store;
     }
   }
 
   const update = (newState) => Object.keys(newState).forEach((key) => {
-    this.state[key] = newState[key];
+    store[key] = newState[key];
   });
 
   if (initialState) {
