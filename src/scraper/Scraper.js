@@ -34,7 +34,6 @@ export class Scraper {
 }
 
 export const createScraper = function (extractors, Engine, html) {
-    //console.log('Scraper createScraper');
     let scraperWithState = withStore(new Scraper());
 
     if (extractors) {
