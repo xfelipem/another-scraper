@@ -33,6 +33,7 @@
   "author": "Xavier Felipe Medina <medina.xavier.felipe@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "cheerio": "^1.0.0-rc.3"
   }
 }
