@@ -6,7 +6,7 @@
       "!/node_modules/"
     ]
   },
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Node scraper microservice",
   "main": "index.js",
   "scripts": {
