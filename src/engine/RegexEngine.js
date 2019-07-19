@@ -1,17 +1,14 @@
+// INTERNAL DEPENDENCIES
 import Engine from './EngineInterface';
 
-export class RegexEngine extends Engine {
+class RegexEngine extends Engine {
     extractData(html, dataExtractors) {
-        const testHtmlForRexep = html.match;
-        let extractedData = [];
+        let extractedData = {};
 
-        forEach(dataExtractors, (extractor, title) => {
-            console.log('forEach CB', { extractor, title });
+        Object.keys(dataExtractors).forEach((name) => {
+            const extractor = dataExtractors[name];
 
-            extractedData.push({
-                title,
-                data: extractor(testHtmlForRexep)
-            });
+            extractedData[name] = extractor(html);
         });
 
         return extractedData;
