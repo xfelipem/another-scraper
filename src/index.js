@@ -3,7 +3,7 @@ import Scraper from './scraper/Scraper';
 import { createScraper } from './scraper/Scraper';
 import { CheerioEngine } from './engine/CheerioEngine';
 import { RegexEngine } from './engine/RegexEngine'
-import { EngineInterface } from './engine/EngineInterface';
+import EngineInterface from './engine/EngineInterface';
 
 // FUNCTIONS
 const createCheerioScraper = (extractors, html) => createScraper(extractors, CheerioEngine, html);
@@ -16,6 +16,6 @@ export {
     createScraper,
     CheerioEngine,
     EngineInterface,
-    RegexEngine
+    RegexEngine,
+    Scraper
 };
-export default Scraper;
