@@ -2,31 +2,46 @@
 const axios = require('axios');
 
 // INTERNAL DEPENDENCIES
-const { createCheerioScraper, createRegexScraper } = require('../index');
+const { createCheerioScraper, RegexEngine } = require('../index');
 
-// Data extractors
+/**
+ * @const {Object} dataMovieCheerioExtractors Extractors for cheerio engine.
+ */
 const dataMovieCheerioExtractors = {
   title: ($) => $('.title_wrapper').find('h1').text(),
   release: ($) => $('.summary_text').text(),
   rating: ($) => $('.ratingValue').find('strong').find('span').text()
 };
+/**
+ * @const {Object} dataMovieCheerioExtractors Extractors for cheerio engine.
+ */
 const dataUrlsRegexpExtractors = {
-  urls: (html) => html.match(/(https?:\/\/[^\s]+)/g)
+  urls: (html) => html.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig)
 };
+
 // Get the website
 axios.get('http://www.imdb.com/title/tt1229340/')
   .then((response) => {
     const { data: html } = response;
 
     if (html) {
-      // Create scraper
+      // Create scraper, load extractors and html
       const dataMovieCheerioScraper = createCheerioScraper(dataMovieCheerioExtractors, html);
-      const dataUrlsRegexpScraper = createRegexScraper(dataUrlsRegexpExtractors, html);
       // Scrap
-      const extractedData = {
-        ...dataMovieCheerioScraper.scrapLoadedHtml(), ...dataUrlsRegexpScraper.scrapLoadedHtml()
-      };
+      const dataMovieFromCheerio = dataMovieCheerioScraper.scrapLoadedHtml();
+      const dataMovieFromRegex = dataMovieCheerioScraper
+        // Change Engine
+        .loadEngine(RegexEngine)
+        // Load extractors
+        .loadExtractors(dataUrlsRegexpExtractors)
+        // Scrap
+        .scrapLoadedHtml();
+        
       // Show data
-      console.log({ extractedData });
+      console.log({
+        ...dataMovieFromCheerio,
+        // Remember, identical keys will override the dataMovieFromCheerio values.
+        ...dataMovieFromRegex
+      });
     }
   });
