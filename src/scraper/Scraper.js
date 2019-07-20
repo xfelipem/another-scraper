@@ -13,13 +13,21 @@ export class Scraper {
 
         return extract(html);
     }
-
+    /**
+     * @todo Add validation against extractors
+     * 
+     * @param {Object} extractors 
+     */
     loadEngine(Engine) {
         this.update({ 'engine': new Engine() });
 
         return this;
     }
-
+    /**
+     * @todo Add validation against engine
+     * 
+     * @param {Object} extractors 
+     */
     loadExtractors(extractors) {
         this.update({ extractors });
 
