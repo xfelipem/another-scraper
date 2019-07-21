@@ -2,7 +2,7 @@
 const axios = require('axios');
 
 // INTERNAL DEPENDENCIES
-const { createCheerioScraper, RegexEngine } = require('../index');
+const { createCheerioScraper, RegexEngine, JsonEngine } = require('../src');
 
 /**
  * @const {Object} dataMovieCheerioExtractors Extractors for cheerio engine.
@@ -17,6 +17,12 @@ const dataMovieCheerioExtractors = {
  */
 const dataUrlsRegexpExtractors = {
   urls: (html) => html.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig)
+};
+/**
+ * @const {Object} dataMovieCheerioExtractors Extractors for cheerio engine.
+ */
+const movieJsonExtractors = {
+  director: (json) => json
 };
 
 // Get the website
@@ -36,11 +42,16 @@ axios.get('http://www.imdb.com/title/tt1229340/')
         .loadExtractors(dataUrlsRegexpExtractors)
         // Scrap
         .scrapLoadedHtml();
-        
+      const dataMovieFromJson = dataMovieCheerioScraper.loadEngine(JsonEngine)
+        .loadExtractors(movieJsonExtractors)
+        .scrapLoadedHtml()
+
       // Show data
       console.log({
         ...dataMovieFromCheerio,
         // Remember, identical keys will override the dataMovieFromCheerio values.
+        ...dataMovieFromJson,
+        // Remember, identical keys will override the dataMovieFromCheerio and dataMovieFromJson values.
         ...dataMovieFromRegex
       });
     }
