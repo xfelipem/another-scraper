@@ -1,5 +1,5 @@
 // INTERNAL DEPENDENCIES
-import Engine from './EngineInterface';
+const Engine = require('./EngineInterface');
 
 class RegexEngine extends Engine {
     extractData(html, dataExtractors) {
@@ -16,4 +16,4 @@ class RegexEngine extends Engine {
     }
 }
 
-export default RegexEngine;
+module.exports = RegexEngine;

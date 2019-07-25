@@ -1,8 +1,8 @@
 // THIRD PARTY DEPENDENCIES
-import cheerio from 'cheerio';
+const cheerio = require('cheerio');
 
 // INTERNAL DEPENDENCIES
-import Engine from './EngineInterface';
+const Engine = require('./EngineInterface');
 
 class CheerioEngine extends Engine {
     extractData(html, dataExtractors) {
@@ -19,4 +19,4 @@ class CheerioEngine extends Engine {
     }
 }
 
-export default CheerioEngine;
+module.exports = CheerioEngine;

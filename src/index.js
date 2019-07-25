@@ -1,25 +1,21 @@
 // INTERNAL DEPENDENCIES
-import { createScraper } from './scraper/Scraper';
-import CheerioEngine from './engine/CheerioEngine';
-import EngineInterface from './engine/EngineInterface';
-import JsonEngine from './engine/JsonEngine';
-import RegexEngine from './engine/RegexEngine'
-import Scraper from './scraper/Scraper';
+const { createScraper } = require('./scraper/Scraper');
+const CheerioEngine = require('./engine/CheerioEngine');
+const EngineInterface = require('./engine/EngineInterface');
+const RegexEngine = require('./engine/RegexEngine');
+const Scraper = require('./scraper/Scraper');
 
 // HELPERS
 const createCheerioScraper = (extractors, html) => createScraper(extractors, CheerioEngine, html);
-const createJsonScraper = (extractors, html) => createScraper(extractors, JsonEngine, html);
 const createRegexScraper = (extractors, html) => createScraper(extractors, RegexEngine, html);
 
 // EXPORT
-export {
+module.exports = {
     createCheerioScraper,
-    createJsonScraper,
     createRegexScraper,
     createScraper,
     CheerioEngine,
     EngineInterface,
-    JsonEngine,
     RegexEngine,
     Scraper
 };

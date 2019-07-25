@@ -1,7 +1,7 @@
 // INTERNAL DEPENDENCIES
-import { withStore } from "../helper";
+const { withStore } = require('../helper');
 
-export class Scraper {
+class Scraper {
     scrapLoadedHtml() {
         return this.scrap(this.get('html'));
     }
@@ -41,7 +41,7 @@ export class Scraper {
     }
 }
 
-export const createScraper = function (extractors, Engine, html) {
+const createScraper = function (extractors, Engine, html) {
     let scraperWithState = withStore(new Scraper());
 
     if (extractors) {
@@ -59,4 +59,7 @@ export const createScraper = function (extractors, Engine, html) {
     return scraperWithState;
 };
 
-export default Scraper;
+module.exports = {
+    createScraper,
+    Scraper
+};

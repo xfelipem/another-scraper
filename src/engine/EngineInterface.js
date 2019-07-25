@@ -10,7 +10,7 @@
  * muy posiblemente no las utilizaría en este caso.
  * 
  */
-export class Engine {
+class Engine {
     /**
      * @function start Retorna una función llamada "extract", la cual acepta
      * el parámetro "html" a parsear.
@@ -20,7 +20,7 @@ export class Engine {
      * 
      * @param {object} extractors Conjunto de métodos que devuelven un valor.
      */
-    start = (extractors) => {
+    start(extractors) {
         return this.storeHtmlInClosure(extractors)
     }
 
@@ -34,9 +34,9 @@ export class Engine {
      * 
      * @param {object} extractors Conjunto de métodos que devuelven un valor.
      */
-    storeHtmlInClosure = (extractors) => {
+    storeHtmlInClosure(extractors) {
         return (html) => this.extractData(html, extractors);
     }
 }
 
-export default Engine;
+module.exports = Engine;

@@ -3,7 +3,7 @@
  * 
  * @param {Object} initialState Initial state of the store
  */
-export const withStore = (object, initialState) => {
+const withStore = (object, initialState) => {
   let store = {};
 
   const get = (key) => {
@@ -26,4 +26,8 @@ export const withStore = (object, initialState) => {
   object.update = update;
 
   return object;
+};
+
+module.exports = {
+  withStore
 };
